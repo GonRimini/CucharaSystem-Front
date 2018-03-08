@@ -60,7 +60,7 @@ export default class AddIngredientsForFood extends Component{
                             onNewRequest={this.handleNewRequest}
                             dataSource={nameIngredients}
                             filter={(searchText, key) => (key.indexOf(searchText) !== -1)}
-                            openOnFocus={true}
+                            openOnFocus={true}  
                             menuProps={menuProps}
                         />
                 </ToolbarGroup>
