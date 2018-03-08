@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
-import AddIngredientsForFood from './AddIngredientsForFood'
 import Paper from 'material-ui/Paper'
 import Subheader from 'material-ui/Subheader'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
+
 const styles = {
     paper :{
         margin:'0 auto',
         Maxwidth:'900px',
-        height:'550px',
+        height:'400px',
     },
     div :{
         margin: '20px',
@@ -23,8 +23,7 @@ const styles = {
     }
 }
 
-export default class AddFoodMenu extends Component {
-    
+export default class AddDrinkMenu extends Component{
     render(){
         return(
             <Paper 
@@ -35,7 +34,7 @@ export default class AddFoodMenu extends Component {
                 <Divider />
                 <div style={styles.div}>
                     <TextField
-                        floatingLabelText="Nombre"
+                        floatingLabelText="Nombre / Scpecificar medida"
                         type="text"
                         fullWidth={true}
                     /><br />
@@ -44,20 +43,16 @@ export default class AddFoodMenu extends Component {
                         type="number"
                         fullWidth={true}
                     />
-                </div><br />
-                <Divider />
-                <Subheader style={{textAlign:'center'}}>Ingredientes</Subheader>
-                <Divider />
-                <AddIngredientsForFood />
-                <Divider />
+                </div>
+                <br />
                 <div style ={styles.button}>
                     <RaisedButton 
                         label="Agregar"
                         primary={true}
                     />
                 </div>
-            </Paper>
+                <Divider />
+            </Paper>  
         )
     }
 }
-
