@@ -6,7 +6,7 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
-import {Table, TableBody, TableRow, TableRowColumn} from 'material-ui/Table'
+import {Table, TableHeader,TableHeaderColumn, TableBody, TableRow, TableRowColumn} from 'material-ui/Table'
 import tableData from '../data/inventoryData'
 
 
@@ -34,6 +34,7 @@ export default class AddIngredientsForFood extends Component{
             showCheckboxes: false,
             deselectOnClickaway: false,
             showRowHover: false,
+            enableSelectAll: false,
             stripedRows: false,
             height: '100px',        
         }
@@ -63,7 +64,11 @@ export default class AddIngredientsForFood extends Component{
             ingredient : '',
             quantity : '',
             value : 0,
-            ingredientsFood: [this.state.ingredient, this.state.quantity, this.state.value]
+            ingredientsFood: [...this.state.ingredientsFood, {
+                nombre: this.state.ingredient, 
+                cantidad:this.state.quantity, 
+                unidad: this.state.value
+            }]
         })
     }
 
@@ -116,37 +121,36 @@ export default class AddIngredientsForFood extends Component{
                     <Table
                         height={this.state.height}
                     >
-                        <TableBody
-                            displayRowCheckbox={this.state.showCheckboxes}
-                            deselectOnClickaway={this.state.deselectOnClickaway}
-                            showRowHover={this.state.showRowHover}
-                            stripedRows={this.state.stripedRows}
+                        <TableHeader
+                            displaySelectAll={this.state.showCheckboxes}
+                            adjustForCheckbox={this.state.showCheckboxes}
+                            enableSelectAll={this.state.enableSelectAll}
                         >
-                            {
-                                this.state.ingredientsFood.map((data, index)=>(
+                           <TableRow>
+                                <TableHeaderColumn
+                                    colSpan = "2"
+                                    style ={{textAlign : 'center'}}
+                                >
+                                    Ingedientes   
+                                </TableHeaderColumn>
+                            </TableRow> 
+                        </TableHeader>
+                            <TableBody
+                                displayRowCheckbox={this.state.showCheckboxes}
+                                deselectOnClickaway={this.state.deselectOnClickaway}
+                                showRowHover={this.state.showRowHover}
+                                stripedRows={this.state.stripedRows}
+                            >
+                                {this.state.ingredientsFood.map((data, index) => ( 
                                     <TableRow
                                         key={index}
                                     >
-                                        <TableRowColumn>{data}</TableRowColumn>
+                                        <TableRowColumn>{data.nombre}</TableRowColumn>
+                                        <TableRowColumn>{data.cantidad}/{data.unidad}</TableRowColumn>
                                     </TableRow>
-                                ))
-                            }
-                        </TableBody>                        
+                                ))}    
+                            </TableBody>                        
                     </Table>
-                    
-                    
-                    {/*
-                    <List>
-                            {
-                                console.log(this.state.ingredientsFood)
-                            }{
-                                this.state.ingredientsFood.map((data, index) => (
-                                    <ListItem/>
-                                ))  
-                            }
-                             
-                    </List>
-                    */}
                 </div>
            
            </div>
