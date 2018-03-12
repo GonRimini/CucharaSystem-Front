@@ -8,8 +8,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 const styles = {
     paper :{
-        margin:'0 auto',
-        Maxwidth:'900px',
+        margin:'100px',
+        Maxwidth:'400px',
         height:'400px',
     },
     div :{

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router';
 import {
     Table,
     TableBody,
@@ -7,7 +8,6 @@ import {
     TableRow,
     TableRowColumn,
   } from 'material-ui/Table'
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import IconButton from 'material-ui/IconButton'
 import AddIcon from 'material-ui/svg-icons/content/add-box'
 import EditeIcon from 'material-ui/svg-icons/content/create'
@@ -69,15 +69,15 @@ export default class Inventory extends React.Component{
                   <TableRow>
                     <TableHeaderColumn style={{textAlign: 'center'}}>Nombre</ TableHeaderColumn>
                     <TableHeaderColumn style={{textAlign: 'center'}}>Cantidad</ TableHeaderColumn>
-                    <TableHeaderColumn> 
-                            <BottomNavigation>
-                                <BottomNavigationItem
-                                    label="Agregar Ingerdiente"
-                                    icon={<AddIcon />}
-                                    onClick={() => this.select(0)}
-                                />
-                            </BottomNavigation>
-                    </ TableHeaderColumn>
+                    <TableHeaderColumn style={{textAlign: 'center'}}> 
+                            <Link to = '/addIngredient'>
+                                <IconButton 
+                                    tooltip="Agregar"
+                                >
+                                    <AddIcon />
+                                </IconButton>
+                            </Link>
+                        </ TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
                 <TableBody

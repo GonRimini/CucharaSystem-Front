@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Paper from 'material-ui/Paper'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
 import AutoComplete from 'material-ui/AutoComplete'
 import TextField from 'material-ui/TextField'
@@ -7,7 +6,9 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
+import {Table, TableBody, TableRow, TableRowColumn} from 'material-ui/Table'
 import tableData from '../data/inventoryData'
+
 
   const style = {
       margin: 12,
@@ -26,8 +27,16 @@ export default class AddIngredientsForFood extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            value:0,
-            searchText: '',        }
+            value:'',
+            ingredient: '',
+            quantity: '' ,
+            ingredientsFood : [],
+            showCheckboxes: false,
+            deselectOnClickaway: false,
+            showRowHover: false,
+            stripedRows: false,
+            height: '100px',        
+        }
     }
     
     handleChange = (e, i, value) =>{
@@ -36,55 +45,111 @@ export default class AddIngredientsForFood extends Component{
         })
     }
 
-    handleUpdateInput = (searchText) =>{
+    handleUpdateInput = (searchText) => {
         this.setState({
-            searchText: searchText,
-        })
-    }
+          ingredient: searchText,
+        });
+      };
 
-    handleNewRequest = () => {
+    onChange = (e) => {
+       this.setState({
+           quantity : e.target.value,
+       })
+   }
+    
+    onSubmit = (e) => {
+        e.preventDefault()
         this.setState({
-            searchText: '',
+            ingredient : '',
+            quantity : '',
+            value : 0,
+            ingredientsFood: [this.state.ingredient, this.state.quantity, this.state.value]
         })
     }
 
     render(){
         return (
-            <Paper zDepth={5} style={style}>
-                <Toolbar style={style}>
-                <ToolbarGroup>
-                        <AutoComplete
-                            hintText="Ingredientes"
-                            searchText={this.state.searchText}
-                            onUpdateInput={this.handleUpdateInput}
-                            onNewRequest={this.handleNewRequest}
-                            dataSource={nameIngredients}
-                            filter={(searchText, key) => (key.indexOf(searchText) !== -1)}
-                            openOnFocus={true}  
-                            menuProps={menuProps}
-                        />
-                </ToolbarGroup>
-                <ToolbarGroup>
-                    <TextField
-                        hintText="Cantidad"
-                        type="number"
-                    />
-                </ToolbarGroup>
-                <ToolbarGroup firstChild={true}>
-                    <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-                        <MenuItem value={0} primaryText="Unidad" />
-                        <MenuItem value={1} primaryText="Unidades" />
-                        <MenuItem value={2} primaryText="Kgrs" />
-                        <MenuItem value={3} primaryText="Grs" />
-                    </DropDownMenu>
-                </ToolbarGroup>
-                <ToolbarGroup>
-                    <FloatingActionButton mini={true} disabled={false} style={style}>
-                        <ContentAdd />
-                    </FloatingActionButton>
-                </ToolbarGroup> 
-                </Toolbar>
-            </Paper>
+            <div>
+                <form onSubmit={this.onSubmit}>
+                    <Toolbar style={style}>
+                        <ToolbarGroup>
+                                <AutoComplete
+                                    hintText="Ingredientes"
+                                    onChange = {this.onChange}
+                                    searchText={this.state.ingredient}
+                                    onUpdateInput={this.handleUpdateInput}
+                                    dataSource={nameIngredients}
+                                    filter={(searchText, key) => (key.indexOf(searchText) !== -1)}
+                                    openOnFocus={true}  
+                                    menuProps={menuProps}
+                                />
+                        </ToolbarGroup>
+                        <ToolbarGroup>
+                            <TextField
+                                value = {this.state.quantity}
+                                onChange={this.onChange}
+                                hintText="Cantidad"
+                                type="number"
+                            />
+                        </ToolbarGroup>
+                        <ToolbarGroup firstChild={true}>
+                            <DropDownMenu value={this.state.value} onChange={this.handleChange}>
+                                <MenuItem value="" primaryText="Unidad" />
+                                <MenuItem value="Unidades" primaryText="Unidades" />
+                                <MenuItem value="Kgrs" primaryText="Kgrs" />
+                                <MenuItem value="Grs" primaryText="Grs" />
+                            </DropDownMenu>
+                        </ToolbarGroup>
+                        <ToolbarGroup>
+                            <FloatingActionButton 
+                                mini={true} 
+                                disabled={false} 
+                                style={style}
+                                type="submit"
+                            >
+                                <ContentAdd />
+                            </FloatingActionButton>
+                        </ToolbarGroup> 
+                    </Toolbar>
+                </form>
+                <div style={{margin:'20px'}}>
+                    <Table
+                        height={this.state.height}
+                    >
+                        <TableBody
+                            displayRowCheckbox={this.state.showCheckboxes}
+                            deselectOnClickaway={this.state.deselectOnClickaway}
+                            showRowHover={this.state.showRowHover}
+                            stripedRows={this.state.stripedRows}
+                        >
+                            {
+                                this.state.ingredientsFood.map((data, index)=>(
+                                    <TableRow
+                                        key={index}
+                                    >
+                                        <TableRowColumn>{data}</TableRowColumn>
+                                    </TableRow>
+                                ))
+                            }
+                        </TableBody>                        
+                    </Table>
+                    
+                    
+                    {/*
+                    <List>
+                            {
+                                console.log(this.state.ingredientsFood)
+                            }{
+                                this.state.ingredientsFood.map((data, index) => (
+                                    <ListItem/>
+                                ))  
+                            }
+                             
+                    </List>
+                    */}
+                </div>
+           
+           </div>
         )
     }
 } 
